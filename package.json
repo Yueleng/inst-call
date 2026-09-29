@@ -1,0 +1,9 @@
+{
+  "name": "inst-call",
+  "private": true,
+  "scripts": {
+    "dev:ui": "pnpm --dir ui dev",
+    "build:ui": "pnpm --dir ui build",
+    "lint:ui": "pnpm --dir ui lint"
+  }
+}

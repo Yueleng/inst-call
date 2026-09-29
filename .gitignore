@@ -1,0 +1,22 @@
+# Node / Next.js
+node_modules/
+.next/
+out/
+
+# Python / Django
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.sqlite3
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
