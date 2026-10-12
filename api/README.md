@@ -84,30 +84,17 @@ Only create each item once. If it already exists, leave it as-is.
 
 ## Configure environment variables
 
-The repository root includes an `.env.example` with the expected local settings. This API currently does not automatically load `.env` files, so export the variables before starting Django.
+The repository root includes an `.env.example` with the expected local settings. Copy it to `.env` once; Django loads that file automatically for `runserver`, migrations, tests, and other management commands.
 
 ```bash
-export DJANGO_DEBUG=true
-export POSTGRES_DB=inst_call
-export POSTGRES_USER=inst_call
-export POSTGRES_PASSWORD=inst_call
-export POSTGRES_HOST=localhost
-export POSTGRES_PORT=5432
+cp ../.env.example ../.env
 ```
 
-Alternatively, create a root `.env` based on `.env.example`, then load it from this directory:
-
-```bash
-set -a
-source ../.env
-set +a
-```
-
-Use a strong, unique `DJANGO_SECRET_KEY` outside local development. Google OAuth credentials are only needed to test Google sign-in.
+Values already set in your shell or deployment environment take precedence over `.env`. Use a strong, unique `DJANGO_SECRET_KEY` outside local development. Google OAuth credentials are only needed to test Google sign-in.
 
 ## Run locally
 
-With the virtual environment active and environment variables loaded, apply database migrations and start the server:
+With the virtual environment active, apply database migrations and start the server:
 
 ```bash
 python manage.py migrate

@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 # base.py is the shared Django configuratin
 # local.py imports it and changes a few development-specific values
 
@@ -11,6 +13,11 @@ from pathlib import Path
 # ]
 # Absolute path to the `api/` directory. Used when a setting needs a project relative path.
 BASE_DIR = Path(__file__).resolve().parents[2]
+
+# Load the repository's local development variables for every Django command.
+# Existing environment variables take precedence, which keeps deployment
+# configuration under the control of the hosting environment.
+load_dotenv(BASE_DIR.parent / ".env")
 
 # TODO: what does this do?
 # Cryptographic key Django uses for sessions, password-reset tokens, etc.
@@ -134,7 +141,14 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_USER_MODEL_EMAIL_FIELD = "email"
 
 # sends a completed login to APP_ORIGIN, defaulting to http://localhost:3000.
+# Where users are sent after login; normally the UI at APP_ORIGIN
 LOGIN_REDIRECT_URL = os.environ.get("APP_ORIGIN", "http://localhost:3000")
+
+"""
+SOCIALACCOUNT_*	
+
+Configures Google OAuth, including client credentials and requested Google profile/email permissions.
+"""
 
 # begins social login from a GET request
 # convenient but worth reviewing for production flows.
@@ -169,8 +183,11 @@ APP_ORIGIN = os.environ.get("APP_ORIGIN", "http://localhost:3000")
 
 # frontend origins allowed to make cross-origin API calls.
 CORS_ALLOWED_ORIGINS = [origin for origin in os.environ.get("CORS_ALLOWED_ORIGINS", APP_ORIGIN).split(",") if origin]
+
 # permits cookies/session credentials on those calls.
+# permits those requests to include session cookies.
 CORS_ALLOW_CREDENTIALS = True
+
 # origins permitted to send unsafe cookie-authenticated requests, such as POST/PATCH/DELETE.
 CSRF_TRUSTED_ORIGINS = [origin for origin in os.environ.get("CSRF_TRUSTED_ORIGINS", APP_ORIGIN).split(",") if origin]
 
