@@ -1,0 +1,55 @@
+# Configuration reference
+#
+# [project]: Starts the package/application metadata section.
+#   name: Distribution name used by pip.
+#   version: Application/package version.
+#   requires-python: Minimum supported Python version.
+#   dependencies: Packages required to run the API. Version upper bounds prevent
+#     automatic upgrades outside the currently supported release line.
+#     - Django: Web framework.
+#     - djangorestframework: REST endpoints and serializers.
+#     - django-allauth[socialaccount]: Account management and Google OAuth.
+#     - django-cors-headers: Permits approved browser origins to call this API.
+#     - psycopg[binary]: PostgreSQL driver with prebuilt native components.
+#     - python-dotenv: Loads the repository-root .env file.
+#
+# [build-system]: Defines how Python builds/install packages from this project.
+#   requires: Build-time dependencies.
+#   build-backend: Build tool pip uses to package/install this project.
+#
+# [tool.setuptools.packages.find]: Configuration for which Python package folders Setuptools includes.
+#   include: Python packages that are included in the distribution.
+#
+# [dependency-groups]: Defines optional dependency groups, generally for local development.
+#   dev: Test-only dependencies; install with `python -m pip install --group dev`.
+#
+# [tool.pytest.ini_options]: Pytest configuration specific to this project.
+#   DJANGO_SETTINGS_MODULE: Settings module pytest loads before testing.
+#   python_files: Filename patterns pytest uses to discover test files.
+
+[project]
+name = "inst-call-api"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+  "Django>=5.2,<5.3",
+  "djangorestframework>=3.15,<3.17",
+  "django-allauth[socialaccount]>=65.0,<66.0",
+  "django-cors-headers>=4.6,<5.0",
+  "psycopg[binary]>=3.2,<4.0",
+  "python-dotenv>=1.0,<2.0",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["apps*", "config*"]
+
+[dependency-groups]
+dev = ["pytest>=8.0", "pytest-django>=4.9"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.local"
+python_files = ["test_*.py", "*_tests.py"]
